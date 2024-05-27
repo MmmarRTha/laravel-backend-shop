@@ -13,7 +13,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return new ProductResource(Product::all());
+        return new ProductResource(Product::where('available', 1)->orderBy('id', 'DESC')->get());
     }
 
     /**
