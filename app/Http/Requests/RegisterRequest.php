@@ -39,8 +39,7 @@ class RegisterRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'password' => 'Password must contain at least one letter, one number and one symbol.',
-            'password.min' => 'Password must be at least 8 characters long.',
+            'password' => 'Password must contain at least 8 Characters Long, One Letter, One Number and One Symbol.',
         ];
     }
 }
