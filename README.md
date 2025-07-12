@@ -5,10 +5,10 @@
 
 # 🚀 Laravel Backend Shop API
 
-![GitHub stars](https://img.shields.io/github/stars/MmmarRTha/laravel-backend-shop?style=social)
-![GitHub forks](https://img.shields.io/github/forks/MmmarRTha/laravel-backend-shop?style=social)
 ![GitHub last commit](https://img.shields.io/github/last-commit/MmmarRTha/laravel-backend-shop)
 ![Issues](https://img.shields.io/github/issues/MmmarRTha/laravel-backend-shop)
+![GitHub stars](https://img.shields.io/github/stars/MmmarRTha/laravel-backend-shop?style=social)
+![GitHub forks](https://img.shields.io/github/forks/MmmarRTha/laravel-backend-shop?style=social)
 
 <p align="center">
   <b>Robust, modern, and production-ready Laravel API for e-commerce applications.</b>
