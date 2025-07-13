@@ -21,7 +21,7 @@
 - **Backend:** Laravel 12+, PHP 8+
 - **Database:** PostgreSQL (default)
 - **API:** RESTful, Sanctum Auth
-- **Testing:** PHPUnit
+- **Testing:** Pest PHP
 - **Frontend Ready:** Easily connect with React, Vue, or any SPA (Inertia.js compatible)
 
 ---
@@ -89,6 +89,10 @@ Authorization: Bearer {token}
 ## 🧪 Testing
 
 ```bash
+# Run tests with Pest
+./vendor/bin/pest
+
+# Or use the artisan command
 php artisan test
 ```
 
