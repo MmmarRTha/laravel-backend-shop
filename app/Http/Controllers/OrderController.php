@@ -16,7 +16,7 @@ class OrderController extends Controller
     public function index()
     {
         return new OrderCollection(
-            Order::with('user')->where('status', 0)->get()
+            Order::with('user')->with('products')->where('status', 0)->get()
         );
     }
 
@@ -38,8 +38,7 @@ class OrderController extends Controller
 
         //format array of products
         $order_product = [];
-        foreach ($products as $product)
-        {
+        foreach ($products as $product) {
             $order_product[] = [
                 'order_id' => $id,
                 'product_id' => $product['id'],
