@@ -1,4 +1,4 @@
-FROM php:8.3-fpm
+FROM php:8.3-cli
 
 # Set working directory
 WORKDIR /var/www/html
@@ -43,5 +43,8 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 # Install npm and build assets if your API serves any front-end assets (optional)
 # RUN apt-get install -y nodejs npm && \
 #    npm install -g npm@latest
+
+# Expose port 8000
+EXPOSE 8000
 
 CMD ["/var/www/html/start.sh"]
