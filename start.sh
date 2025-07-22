@@ -21,7 +21,7 @@ php artisan view:clear
 
 # Test database connection
 echo "Testing database connection..."
-php artisan tinker --execute="echo 'DB connection: ' . DB::connection()->getPdo() ? 'OK' : 'FAILED';"
+php artisan db:show || echo "Database connection test failed, continuing..."
 
 echo "Publishing cloudinary provider..."
 php artisan vendor:publish --provider="CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider" --tag="cloudinary-laravel-config" || echo "Cloudinary publish failed, continuing..."
