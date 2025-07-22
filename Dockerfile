@@ -23,6 +23,9 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Copy application files
 COPY . /var/www/html
 
+# Copy .env.render as .env for production
+COPY .env.render /var/www/html/.env
+
 # Make start script executable
 RUN chmod +x /var/www/html/start.sh
 
@@ -33,9 +36,9 @@ ENV PHP_ERRORS_STDERR 1
 ENV RUN_SCRIPTS 1
 ENV REAL_IP_HEADER 1
 
-# Laravel config
-ENV APP_ENV production
-ENV APP_DEBUG false
+# Laravel config (these can be overridden by .env file)
+# ENV APP_ENV production
+# ENV APP_DEBUG false
 ENV LOG_CHANNEL stderr
 
 # Allow composer to run as root (important for containerized environments)

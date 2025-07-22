@@ -3,8 +3,13 @@ echo "Running composer"
 
 composer install --no-dev --working-dir=/var/www/html
 
-echo "Generating application key..."
-php artisan key:generate --show
+echo "Checking application key..."
+if [ -z "$APP_KEY" ] || [ "$APP_KEY" = "" ]; then
+    echo "No APP_KEY found, generating new one..."
+    php artisan key:generate --force
+else
+    echo "APP_KEY already set"
+fi
 
 # Clear config cache
 php artisan config:clear
