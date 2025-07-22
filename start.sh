@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-echo "Running composer"
+set -e  # Exit on any error
 
+echo "Running composer"
 composer install --no-dev --working-dir=/var/www/html
 
 echo "Checking application key..."
@@ -12,20 +13,24 @@ else
 fi
 
 # Clear config cache
+echo "Clearing caches..."
 php artisan config:clear
 php artisan cache:clear
 php artisan route:clear
 php artisan view:clear
 
+# Test database connection
+echo "Testing database connection..."
+php artisan tinker --execute="echo 'DB connection: ' . DB::connection()->getPdo() ? 'OK' : 'FAILED';"
+
 echo "Publishing cloudinary provider..."
-php artisan vendor:publish --provider="CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider" --tag="cloudinary-laravel-config"
+php artisan vendor:publish --provider="CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider" --tag="cloudinary-laravel-config" || echo "Cloudinary publish failed, continuing..."
 
-echo "Run migrations fresh"
-php artisan migrate:fresh --force --verbose
+echo "Running migrations..."
+php artisan migrate --force --verbose
 
-echo "Seed the database (only if tables are empty to avoid duplicates)"
-echo "Checking if database needs seeding..."
-php artisan db:seed --force --verbose
+echo "Seeding database..."
+php artisan db:seed --force --verbose || echo "Seeding failed, continuing..."
 
 # Start Laravel development server
 echo "Starting Laravel development server..."
