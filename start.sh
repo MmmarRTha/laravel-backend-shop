@@ -29,8 +29,8 @@ php artisan vendor:publish --provider="CloudinaryLabs\CloudinaryLaravel\Cloudina
 echo "Running migrations fresh..."
 php artisan migrate:fresh --force --verbose
 
-echo "Seeding database..."
-php artisan db:seed  --verbose || echo "Seeding failed, continuing..."
+echo "Seeding database start sh..."
+php artisan db:seed --force --verbose || echo "Seeding failed, continuing..."
 
 # Start Laravel development server
 echo "Starting Laravel development server..."

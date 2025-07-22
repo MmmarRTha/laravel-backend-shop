@@ -39,7 +39,7 @@ echo "Running database migrations fresh..."
 php artisan migrate:fresh --force --verbose
 
 # Seed the database
-echo "Seeding database..."
+echo "Seeding database render build sh..."
 php artisan db:seed --force --verbose
 
 # Verify migrations and seeding ran
