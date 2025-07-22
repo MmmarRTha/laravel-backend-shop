@@ -54,13 +54,9 @@ RUN php artisan route:cache
 # Expose port 8000
 EXPOSE 8000
 
-# Create startup script
-RUN echo '#!/bin/bash\n
-# Ensure environment variables are loaded\ncp .env.render .env\n
-# Clear config cache\nphp artisan config:clear\n
-# Run migrations with debug output\nphp artisan migrate --force --verbose\n
-# Start server\nexec php artisan serve --host=0.0.0.0 --port=8000' > /var/www/start.sh \
-    && chmod +x /var/www/start.sh
+# Copy startup script
+COPY start.sh /var/www/start.sh
+RUN chmod +x /var/www/start.sh
 
 # Use the startup script
 CMD ["/var/www/start.sh"]
