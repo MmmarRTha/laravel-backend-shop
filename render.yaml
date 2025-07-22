@@ -38,3 +38,4 @@ databases:
   - name: laravel-db
     plan: starter
     region: ohio
+    ipAllowList: [] # Allow all connections
