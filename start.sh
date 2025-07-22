@@ -26,11 +26,11 @@ php artisan db:show || echo "Database connection test failed, continuing..."
 echo "Publishing cloudinary provider..."
 php artisan vendor:publish --provider="CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider" --tag="cloudinary-laravel-config" || echo "Cloudinary publish failed, continuing..."
 
-echo "Running migrations..."
-php artisan migrate --force --verbose
+echo "Running migrations fresh..."
+php artisan migrate:fresh --force --verbose
 
 echo "Seeding database..."
-php artisan db:seed --force --verbose || echo "Seeding failed, continuing..."
+php artisan db:seed  --verbose || echo "Seeding failed, continuing..."
 
 # Start Laravel development server
 echo "Starting Laravel development server..."

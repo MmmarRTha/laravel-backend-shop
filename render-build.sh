@@ -35,8 +35,8 @@ echo "Generating application key..."
 php artisan key:generate --force
 
 # Run migrations with verbose output
-echo "Running database migrations..."
-php artisan migrate --force --verbose
+echo "Running database migrations fresh..."
+php artisan migrate:fresh --force --verbose
 
 # Seed the database
 echo "Seeding database..."
