@@ -1,62 +1,25 @@
 FROM php:8.3-fpm
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    git \
-    curl \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
-    zip \
-    unzip
+COPY . .
 
-# Install Node.js and npm
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get install -y nodejs
+# Image config
+ENV SKIP_COMPOSER 1
+ENV WEBROOT /var/www/html/public
+ENV PHP_ERRORS_STDERR 1
+ENV RUN_SCRIPTS 1
+ENV REAL_IP_HEADER 1
 
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+# Laravel config
+ENV APP_ENV production
+ENV APP_DEBUG false
+ENV LOG_CHANNEL stderr
 
-# Install PHP extensions
-RUN apt-get update && apt-get install -y libpq-dev \
-    && docker-php-ext-install pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd
+# Allow composer to run as root (important for containerized environments)
+ENV COMPOSER_ALLOW_SUPERUSER 1
 
-# Get latest Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Install npm and build assets if your API serves any front-end assets (optional)
+# RUN apk update && \
+#    apk add --no-cache curl nodejs npm && \
+#    npm install -g npm@latest
 
-# Set working directory
-WORKDIR /var/www
-
-# Copy existing application directory contents
-COPY . /var/www
-
-# Install dependencies
-RUN composer install --no-interaction --no-dev --optimize-autoloader
-
-# Install npm dependencies and build assets (with error handling)
-RUN if [ -f "package.json" ]; then \
-    npm install --no-audit --no-fund --no-optional && \
-    npm run build || echo "Frontend build failed, but continuing deployment" \
-    ; fi
-
-# Set permissions
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
-
-# Copy render environment file and run build script when deploying
-COPY .env.render /var/www/.env.render
-COPY render-build.sh /var/www/render-build.sh
-RUN chmod +x /var/www/render-build.sh
-
-# Cache configuration
-RUN php artisan config:cache
-RUN php artisan route:cache
-
-# Expose port 8000
-EXPOSE 8000
-
-# Copy startup script
-COPY start.sh /var/www/start.sh
-RUN chmod +x /var/www/start.sh
-
-# Use the startup script
-CMD ["/var/www/start.sh"]
+CMD ["/start.sh"]
