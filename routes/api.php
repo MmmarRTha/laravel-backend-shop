@@ -21,3 +21,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+
+// Health check endpoint for Render
+Route::get('/health', function () {
+    return response()->json(['status' => 'ok']);
+});
