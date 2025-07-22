@@ -1,6 +1,29 @@
 FROM php:8.3-fpm
 
-COPY . .
+# Set working directory
+WORKDIR /var/www/html
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip
+
+# Install PHP extensions
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Copy application files
+COPY . /var/www/html
+
+# Make start script executable
+RUN chmod +x /var/www/html/start.sh
 
 # Image config
 ENV SKIP_COMPOSER 1
@@ -18,8 +41,7 @@ ENV LOG_CHANNEL stderr
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
 # Install npm and build assets if your API serves any front-end assets (optional)
-# RUN apk update && \
-#    apk add --no-cache curl nodejs npm && \
+# RUN apt-get install -y nodejs npm && \
 #    npm install -g npm@latest
 
-CMD ["/start.sh"]
+CMD ["/var/www/html/start.sh"]
