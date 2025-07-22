@@ -1,45 +1,40 @@
 services:
   - type: web
     name: laravel-api
-    env: php
-    buildCommand: "composer install --no-interaction --prefer-dist --optimize-autoloader && php artisan config:cache && php artisan route:cache && npm ci && npm run build"
-    startCommand: "php artisan serve --host 0.0.0.0 --port $PORT"
+    env: docker
+    plan: starter
+    region: ohio
     healthCheckPath: /api/health
     envVars:
-      - key: APP_NAME
-        value: "Laravel"
       - key: APP_ENV
         value: production
-      - key: APP_DEBUG
-        value: false
-      - key: APP_URL
-        fromService:
-          name: laravel-api
-          type: web
-          property: url
-      - key: LOG_CHANNEL
-        value: stack
-      - key: LOG_LEVEL
-        value: debug
-      - key: DB_CONNECTION
-        value: pgsql
-      - key: DB_HOST
-        value: dpg-your-postgres-host # Replace with your Render Postgres host
-      - key: DB_PORT
-        value: 5432
-      - key: DB_DATABASE
-        value: your_database_name # Replace with your database name
-      - key: DB_USERNAME
-        value: your_database_user # Replace with your database user
-      - key: DB_PASSWORD
-        sync: false
-      - key: CACHE_DRIVER
-        value: file
-      - key: QUEUE_CONNECTION
-        value: sync
-      - key: SESSION_DRIVER
-        value: file
-      - key: SESSION_LIFETIME
-        value: 120
       - key: APP_KEY
         generateValue: true
+      - key: APP_DEBUG
+        value: false
+      - key: DATABASE_HOST
+        fromDatabase:
+          name: laravel-db
+          property: host
+      - key: DATABASE_NAME
+        fromDatabase:
+          name: laravel-db
+          property: database
+      - key: DATABASE_USERNAME
+        fromDatabase:
+          name: laravel-db
+          property: user
+      - key: DATABASE_PASSWORD
+        fromDatabase:
+          name: laravel-db
+          property: password
+      - key: RENDER_EXTERNAL_URL
+        fromService:
+          type: web
+          name: laravel-api
+          property: url
+
+databases:
+  - name: laravel-db
+    plan: starter
+    region: ohio
