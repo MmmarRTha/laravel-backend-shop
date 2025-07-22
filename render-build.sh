@@ -38,8 +38,12 @@ php artisan key:generate --force
 echo "Running database migrations..."
 php artisan migrate --force --verbose
 
-# Verify migrations ran
-echo "Verifying migrations..."
+# Seed the database
+echo "Seeding database..."
+php artisan db:seed --force --verbose
+
+# Verify migrations and seeding ran
+echo "Verifying migrations and seeding..."
 php debug-db.php
 
 echo "===== Render build script completed ====="
