@@ -20,7 +20,7 @@ return [
     'allowed_methods' => ['*'],
 
     'allowed_origins' => [
-        'https://render-laravel-coffee.onrender.com/api',
+        'https://render-laravel-coffee.onrender.com',
         'http://localhost:5173',
     ],
 
