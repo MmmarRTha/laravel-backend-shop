@@ -1,5 +1,3 @@
 <?php
 
-it('', function () {
-
-});
+it('', function () {});
