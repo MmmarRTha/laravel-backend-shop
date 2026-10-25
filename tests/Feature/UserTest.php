@@ -43,7 +43,7 @@ test('an authenticated user can logout', function () {
     $user = User::factory()->create();
     $token = $user->createToken('test')->plainTextToken;
 
-    $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+    $response = $this->withHeader('Authorization', 'Bearer '.$token)
         ->postJson('/api/logout');
 
     $response->assertStatus(200);
@@ -53,7 +53,7 @@ test('an authenticated user can access their user info', function () {
     $user = User::factory()->create();
     $token = $user->createToken('test')->plainTextToken;
 
-    $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+    $response = $this->withHeader('Authorization', 'Bearer '.$token)
         ->getJson('/api/user');
 
     $response->assertStatus(200)->assertJson(['email' => $user->email]);

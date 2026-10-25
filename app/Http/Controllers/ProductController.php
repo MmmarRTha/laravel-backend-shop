@@ -39,8 +39,9 @@ class ProductController extends Controller
     {
         $product->available = 0;
         $product->save();
+
         return [
-            "product" => $product
+            'product' => $product,
         ];
     }
 
