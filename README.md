@@ -18,7 +18,7 @@
 
 ## 🛠️ Tech Stack
 
-- **Backend:** Laravel 12+, PHP 8+
+- **Backend:** Laravel 13+, PHP 8+
 - **Database:** PostgreSQL (default)
 - **API:** RESTful, Sanctum Auth
 - **Testing:** Pest PHP
