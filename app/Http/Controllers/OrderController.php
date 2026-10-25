@@ -30,13 +30,13 @@ class OrderController extends Controller
         $order->total = $request->total;
         $order->save();
 
-        //Get order id
+        // Get order id
         $id = $order->id;
 
-        //get products from request
+        // get products from request
         $products = $request->products;
 
-        //format array of products
+        // format array of products
         $order_product = [];
         foreach ($products as $product) {
             $order_product[] = [
@@ -44,15 +44,15 @@ class OrderController extends Controller
                 'product_id' => $product['id'],
                 'quantity' => $product['quantity'],
                 'created_at' => now(),
-                'updated_at' => now()
+                'updated_at' => now(),
             ];
         }
 
-        //save products to order_products table
+        // save products to order_products table
         OrderProduct::insert($order_product);
 
         return [
-            'message' => 'Order has been created successfully. It will be ready for delivery soon.'
+            'message' => 'Order has been created successfully. It will be ready for delivery soon.',
         ];
     }
 
@@ -73,7 +73,7 @@ class OrderController extends Controller
         $order->save();
 
         return [
-            'order' => $order
+            'order' => $order,
         ];
     }
 
